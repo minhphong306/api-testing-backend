@@ -8,6 +8,12 @@ export enum UserStatus {
   BLOCKED = 'blocked'
 }
 
+export enum UserRole {
+  USER = 'user',
+  LIBRARIAN = 'librarian',
+  ADMIN = 'admin'
+}
+
 @Entity('users')
 export class User extends BaseEntity {
   @Column({ type: 'varchar', length: 255 })
@@ -15,6 +21,9 @@ export class User extends BaseEntity {
 
   @Column({ type: 'varchar', length: 255, unique: true })
   email: string;
+
+  @Column({ type: 'varchar', length: 255 }) // Thêm cột password
+  password: string;
 
   @Column({ type: 'varchar', length: 20 })
   phone: string;
@@ -31,6 +40,13 @@ export class User extends BaseEntity {
     default: UserStatus.ACTIVE
   })
   status: UserStatus;
+
+  @Column({ // Thêm cột role
+    type: 'enum',
+    enum: UserRole,
+    default: UserRole.USER
+  })
+  role: UserRole;
 
   @Column({ type: 'varchar', length: 50, nullable: true })
   cardNumber?: string;

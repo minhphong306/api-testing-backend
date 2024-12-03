@@ -1,6 +1,6 @@
-import { IsString, IsEmail, IsEnum, IsDate, IsOptional, MaxLength } from 'class-validator';
-import { UserStatus } from '../entities/user.entity';
-import { Transform, Type } from 'class-transformer';
+import { IsString, IsEmail, IsEnum, IsDate, IsOptional, MaxLength, MinLength } from 'class-validator';
+import { UserStatus, UserRole } from '../entities/user.entity';
+import { Type } from 'class-transformer';
 
 export class CreateUserDto {
   @IsString()
@@ -10,6 +10,11 @@ export class CreateUserDto {
   @IsEmail()
   @MaxLength(255)
   email: string;
+
+  @IsString()
+  @MinLength(6)
+  @MaxLength(255)
+  password: string;
 
   @IsString()
   @MaxLength(20)
@@ -26,6 +31,10 @@ export class CreateUserDto {
   @IsEnum(UserStatus)
   status: UserStatus;
 
+  @IsEnum(UserRole)
+  @IsOptional()
+  role?: UserRole;
+
   @IsString()
   @IsOptional()
   @MaxLength(50)
@@ -33,3 +42,11 @@ export class CreateUserDto {
 }
 
 export class UpdateUserDto implements Partial<CreateUserDto> {}
+
+export class LoginDto {
+  @IsEmail()
+  email: string;
+
+  @IsString()
+  password: string;
+}

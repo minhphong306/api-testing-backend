@@ -30,9 +30,6 @@ import { UserService } from 'src/services/user.service';
                     : [],
             }),
         }),
-        TypeOrmModule.forFeature([Book, User, BorrowRecord]),
     ],
-    controllers: [BookController, UserController, BorrowRecordController],
-    providers: [BookService, UserService, BorrowRecordService],
 })
 export class DatabaseModule { }

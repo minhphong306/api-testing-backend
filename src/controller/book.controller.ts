@@ -1,17 +1,23 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, Query, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, Query, HttpStatus, UseGuards } from '@nestjs/common';
 import { BookService } from '../services/book.service';
 import { CreateBookDto, UpdateBookDto } from '../dtos/book.dto';
 import { BookResponseDto } from '../dtos/response/book.response.dto';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { RolesGuard } from 'src/auth/roles.guard';
+import { Role } from 'src/auth/role.enum';
+import { Roles } from 'src/auth/roles.decorator';
 
 @ApiTags('books')
 @Controller('books')
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class BookController {
     constructor(private readonly bookService: BookService) { }
 
     @Post()
     @ApiOperation({ summary: 'Create new book' })
     @ApiResponse({ status: HttpStatus.CREATED, type: BookResponseDto })
+    @Roles(Role.LIBRARIAN, Role.ADMIN)
     async create(@Body() createBookDto: CreateBookDto): Promise<BookResponseDto> {
         return this.bookService.create(createBookDto);
     }
@@ -37,6 +43,7 @@ export class BookController {
     @Put(':id')
     @ApiOperation({ summary: 'Update book' })
     @ApiResponse({ status: HttpStatus.OK, type: BookResponseDto })
+    @Roles(Role.LIBRARIAN, Role.ADMIN)
     async update(
         @Param('id') id: number,
         @Body() updateBookDto: UpdateBookDto,
@@ -47,6 +54,7 @@ export class BookController {
     @Delete(':id')
     @ApiOperation({ summary: 'Delete book' })
     @ApiResponse({ status: HttpStatus.NO_CONTENT })
+    @Roles(Role.ADMIN)
     async remove(@Param('id') id: number): Promise<void> {
         await this.bookService.remove(id);
     }

@@ -4,6 +4,15 @@ import { AppService } from './app.service';
 import { DatabaseModule } from './database/database.module';
 import * as Joi from 'joi';
 import { ConfigModule } from '@nestjs/config';
+import { UserModule } from './user/user.module';
+import { BookController } from './controller/book.controller';
+import { BorrowRecordController } from './controller/borrow-record.controller';
+import { UserController } from './controller/user.controller';
+import { BookService } from './services/book.service';
+import { BorrowRecordService } from './services/borrow-record.service';
+import { UserService } from './services/user.service';
+import { BookModule } from './book/book.module';
+import { BorrowRecordModule } from './borrow-record/borrow-record.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -25,6 +34,9 @@ import { ConfigModule } from '@nestjs/config';
       }),
     }),
     DatabaseModule,
+    UserModule,
+    BookModule,
+    BorrowRecordModule,
   ],
   controllers: [AppController],
   providers: [AppService],

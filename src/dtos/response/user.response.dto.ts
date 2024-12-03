@@ -1,4 +1,4 @@
-import { User } from '../../entities/user.entity';
+import { User, UserRole, UserStatus } from '../../entities/user.entity';
 import { BaseResponseDto } from './base.response.dto';
 
 export class UserResponseDto extends BaseResponseDto {
@@ -7,11 +7,15 @@ export class UserResponseDto extends BaseResponseDto {
     phone: string;
     address?: string;
     membershipExpiry: Date;
-    status: string;
+    status: UserStatus;
+    role: UserRole;
     cardNumber?: string;
 
     constructor(user: User) {
         super();
-        Object.assign(this, user);
+        Object.assign(this, {
+            ...user,
+            password: undefined // Loại bỏ password khỏi response
+        });
     }
 }
