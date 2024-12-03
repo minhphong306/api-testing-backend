@@ -1,9 +1,15 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { BookController } from 'src/controller/book.controller';
+import { BorrowRecordController } from 'src/controller/borrow-record.controller';
+import { UserController } from 'src/controller/user.controller';
 import { Book } from 'src/entities/book.entity';
 import { BorrowRecord } from 'src/entities/borrow-record.entity';
 import { User } from 'src/entities/user.entity';
+import { BookService } from 'src/services/book.service';
+import { BorrowRecordService } from 'src/services/borrow-record.service';
+import { UserService } from 'src/services/user.service';
 
 @Module({
     imports: [
@@ -24,6 +30,9 @@ import { User } from 'src/entities/user.entity';
                     : [],
             }),
         }),
+        TypeOrmModule.forFeature([Book, User, BorrowRecord]),
     ],
+    controllers: [BookController, UserController, BorrowRecordController],
+    providers: [BookService, UserService, BorrowRecordService],
 })
 export class DatabaseModule { }

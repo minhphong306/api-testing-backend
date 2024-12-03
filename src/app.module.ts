@@ -1,22 +1,9 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthenModule } from './authen/authen.module';
-import { PublicModule } from './public/public.module';
-import { AuthorModule } from './author/author.module';
-import { CategoryModule } from './category/category.module';
-import { BookModule } from './book/book.module';
 import { DatabaseModule } from './database/database.module';
-import { UsersModule } from './users/users.module';
 import * as Joi from 'joi';
 import { ConfigModule } from '@nestjs/config';
-
-@Module({
-  controllers: [AppController],
-  providers: [AppService],
-  imports: [AuthenModule, PublicModule, AuthorModule, CategoryModule, BookModule, DatabaseModule, UsersModule],
-})
-
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -38,7 +25,6 @@ import { ConfigModule } from '@nestjs/config';
       }),
     }),
     DatabaseModule,
-    AuthenModule, PublicModule, AuthorModule, CategoryModule, BookModule, DatabaseModule, UsersModule
   ],
   controllers: [AppController],
   providers: [AppService],
