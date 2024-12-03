@@ -13,6 +13,7 @@ import { BorrowRecordService } from './services/borrow-record.service';
 import { UserService } from './services/user.service';
 import { BookModule } from './book/book.module';
 import { BorrowRecordModule } from './borrow-record/borrow-record.module';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -33,10 +34,12 @@ import { BorrowRecordModule } from './borrow-record/borrow-record.module';
         MAX_QUERY_RETRY: Joi.number().required(),
       }),
     }),
+    AuthModule,
     DatabaseModule,
     UserModule,
     BookModule,
     BorrowRecordModule,
+    
   ],
   controllers: [AppController],
   providers: [AppService],

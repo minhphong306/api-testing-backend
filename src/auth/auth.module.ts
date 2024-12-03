@@ -9,7 +9,7 @@ import { UserModule } from '../user/user.module';
 @Module({
     imports: [
         UserModule,
-        PassportModule,
+        PassportModule.register({ defaultStrategy: 'jwt' }),
         JwtModule.registerAsync({
             imports: [ConfigModule],
             useFactory: async (configService: ConfigService) => ({
@@ -19,7 +19,7 @@ import { UserModule } from '../user/user.module';
             inject: [ConfigService],
         }),
     ],
-    providers: [AuthService, JwtStrategy],
+    providers: [AuthService, JwtStrategy, ConfigService],
     exports: [AuthService],
 })
 export class AuthModule { }
