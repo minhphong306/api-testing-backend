@@ -11,7 +11,6 @@ import { BookStatus } from 'src/entities/book.entity';
 
 @ApiTags('Quản lý sách')
 @Controller('books')
-@UseGuards(JwtAuthGuard, RolesGuard)
 export class BookController {
     constructor(private readonly bookService: BookService) { }
 
@@ -28,6 +27,7 @@ export class BookController {
                     isbn: '9780132350884',
                     publishYear: 2008,
                     publisher: 'Prentice Hall',
+                    status: "available",
                     category: 'Programming',
                     location: 'A1-01',
                     quantity: 5,
@@ -60,6 +60,7 @@ export class BookController {
             }
         }
     })
+    @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles(Role.LIBRARIAN, Role.ADMIN)
     async create(@Body() createBookDto: CreateBookDto): Promise<BookResponseDto> {
         return this.bookService.create(createBookDto);
@@ -238,6 +239,7 @@ export class BookController {
             }
         }
     })
+    @UseGuards(JwtAuthGuard, RolesGuard)
     async update(
         @Param('id') id: number,
         @Body() updateBookDto: UpdateBookDto,
@@ -285,6 +287,7 @@ export class BookController {
             }
         }
     })
+    @UseGuards(JwtAuthGuard, RolesGuard)
     async remove(@Param('id') id: number): Promise<void> {
         await this.bookService.remove(id);
     }
