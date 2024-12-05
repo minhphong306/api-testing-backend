@@ -29,6 +29,7 @@ export class CreateUserDto {
   membershipExpiry: Date;
 
   @IsEnum(UserStatus)
+  @IsOptional()
   status: UserStatus;
 
   @IsEnum(UserRole)
@@ -41,7 +42,9 @@ export class CreateUserDto {
   cardNumber?: string;
 }
 
-export class UpdateUserDto implements Partial<CreateUserDto> {}
+export class UpdateUserDto implements Partial<CreateUserDto> {
+
+}
 
 export class LoginDto {
   @IsEmail()

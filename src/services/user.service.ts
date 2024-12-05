@@ -22,12 +22,9 @@ export class UserService {
             throw new BadRequestException('User with this email already exists');
         }
 
-        // Hash password
-        const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
-
         const user = this.userRepository.create({
             ...createUserDto,
-            password: hashedPassword,
+            password: createUserDto.password,
             role: createUserDto.role || UserRole.USER // Mặc định là USER nếu không specify
         });
 
